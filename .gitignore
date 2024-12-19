@@ -1,7 +1,7 @@
-# Compiled class file
+# Compiled class files
 *.class
 
-# Log file
+# Log files
 *.log
 
 # BlueJ files
@@ -10,7 +10,7 @@
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
-# Package Files #
+# Package files
 *.jar
 *.war
 *.nar
@@ -19,6 +19,39 @@
 *.tar.gz
 *.rar
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+# Eclipse-specific files
+# Eclipse project files
+.project
+.classpath
+.settings/
+
+# Eclipse metadata
+.metadata/
+
+# Eclipse local history
+.localhistory/
+
+# Eclipse specific folders
+bin/
+
+# Java dependency management
+target/
+
+# Virtual machine crash logs
 hs_err_pid*
 replay_pid*
+
+# IntelliJ IDEA
+.idea/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Node.js (if you're using it)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Maven wrapper files (if applicable)
+.mvn/
