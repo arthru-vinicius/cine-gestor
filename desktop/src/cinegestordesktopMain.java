@@ -52,8 +52,9 @@ public class cinegestordesktopMain extends JFrame {
 		contentPane.setLayout(null);
 		
 		JButton btnCineGestor = new JButton("Cine Gestor");
+		btnCineGestor.setForeground(new Color(0, 0, 0));
 		btnCineGestor.setFont(new Font("Arial", Font.PLAIN, 22));
-		btnCineGestor.setBounds(188, 11, 818, 68);
+		btnCineGestor.setBounds(188, 8, 818, 68);
 		contentPane.add(btnCineGestor);
 		
 		JButton btnTelaInicial = new JButton("Tela Inicial");
