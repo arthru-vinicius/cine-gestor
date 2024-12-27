@@ -13,13 +13,14 @@ import java.awt.Font;
 import javax.swing.JTable;
 import javax.swing.JList;
 import java.awt.Color;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.JTextPane;
 
 public class cinegestordesktopMain extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTable ventaTabela;
-	private JTable table_1;
 
 	/**
 	 * Launch the application.
@@ -28,8 +29,8 @@ public class cinegestordesktopMain extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					cinegestordesktopMain frame = new cinegestordesktopMain();
-					frame.setVisible(true);
+					cinegestordesktopMain containerDasTelas = new cinegestordesktopMain();
+					containerDasTelas.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -40,6 +41,7 @@ public class cinegestordesktopMain extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	
 	public cinegestordesktopMain() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1066, 572);
@@ -49,29 +51,33 @@ public class cinegestordesktopMain extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JButton btnNewButton = new JButton("Cine Gestor");
-		btnNewButton.setFont(new Font("Arial", Font.PLAIN, 22));
-		btnNewButton.setBounds(188, 11, 818, 68);
-		contentPane.add(btnNewButton);
+		JButton btnCineGestor = new JButton("Cine Gestor");
+		btnCineGestor.setFont(new Font("Arial", Font.PLAIN, 22));
+		btnCineGestor.setBounds(188, 11, 818, 68);
+		contentPane.add(btnCineGestor);
 		
-		JButton btnNewButton_1 = new JButton("Tela Inicial");
-		btnNewButton_1.setBounds(0, 11, 178, 68);
-		contentPane.add(btnNewButton_1);
+		JButton btnTelaInicial = new JButton("Tela Inicial");
+		btnTelaInicial.setBounds(0, 11, 178, 68);
+		contentPane.add(btnTelaInicial);
 		
-		JButton btnNewButton_2 = new JButton("Vendas");
-		btnNewButton_2.setBounds(0, 90, 178, 68);
-		contentPane.add(btnNewButton_2);
+		JButton btnVendas = new JButton("Vendas");
+		btnVendas.setBounds(0, 90, 178, 49);
+		contentPane.add(btnVendas);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(188, 90, 818, 406);
+		tabbedPane.setBounds(188, 122, 818, 400);
 		contentPane.add(tabbedPane);
 		
-		table_1 = new JTable();
-		table_1.setCellSelectionEnabled(true);
-		table_1.setColumnSelectionAllowed(true);
-		tabbedPane.addTab("Tela Inicial", null, table_1, null);
+		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.setBounds(0, 150, 178, 49);
+		contentPane.add(btnCancelar);
 		
-		ventaTabela = new JTable();
-		tabbedPane.addTab("New tab", null, ventaTabela, null);
+		JButton btnEditarDados = new JButton("Editar dados");
+		btnEditarDados.setBounds(0, 210, 178, 49);
+		contentPane.add(btnEditarDados);
+		
+		JButton btnSair = new JButton("Sair");
+		btnSair.setBounds(0, 278, 178, 49);
+		contentPane.add(btnSair);
 	}
 }
