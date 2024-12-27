@@ -6,12 +6,17 @@ import javax.swing.JButton;
 import java.awt.Font;
 import javax.swing.JTextField;
 import java.awt.Color;
+import javax.swing.AbstractAction;
+import java.awt.event.ActionEvent;
+import javax.swing.Action;
+import java.awt.event.ActionListener;
 
 public class TelaLogin {
 
 	private JFrame frame;
 	private JTextField textFieldEmailLogin;
 	private JTextField textFieldSenha;
+	private final Action action = new SwingAction();
 
 	/**
 	 * Launch the application.
@@ -71,6 +76,17 @@ public class TelaLogin {
 		frame.getContentPane().add(textFieldSenha);
 		
 		JButton btnEsqueceuSenha = new JButton("Esqueceu sua senha? clique aqui!");
+		btnEsqueceuSenha.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				 //AQUI VAI SER STARTADO OUTRA CLASSE, A TELA DE RECUPERAÇÃO DE SENHA.
+				
+			 TelaRecuperarSenha telaRecuperacao = new TelaRecuperarSenha();  // Cria uma nova instância da classe TelaRecuperacaoSenha
+			       telaRecuperacao.setVisible(true);  // Torna a tela visível
+	                
+			}
+		});
+		btnEsqueceuSenha.setAction(action);
 		btnEsqueceuSenha.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 16));
 		btnEsqueceuSenha.setForeground(new Color(0, 0, 255));
 		btnEsqueceuSenha.setBounds(217, 415, 353, 32);
@@ -80,5 +96,13 @@ public class TelaLogin {
 		btnEntrar.setFont(new Font("Arial", Font.BOLD, 22));
 		btnEntrar.setBounds(276, 332, 163, 32);
 		frame.getContentPane().add(btnEntrar);
+	}
+	private class SwingAction extends AbstractAction {
+		public SwingAction() {
+			putValue(NAME, "SwingAction");
+			putValue(SHORT_DESCRIPTION, "Some short description");
+		}
+		public void actionPerformed(ActionEvent e) {
+		}
 	}
 }
