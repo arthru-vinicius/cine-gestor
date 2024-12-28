@@ -1,0 +1,29 @@
+# Eclipse
+/.settings/
+/bin/
+/target/
+/.project
+.classpath
+
+# Maven
+/.mvn/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+
+# IntelliJ IDEA
+/.idea/
+/*.iml
+
+# Sistema Operacional
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Outros
+*.class
+*.swp

@@ -1,0 +1,16 @@
+﻿
+
+- Atualizar o script de criação do banco de dados;
+
+- Sempre dar Update Project pelo Maven;
+
+- Atualizar o banco de dados para softDelete
+
+- Verificar se buscarPrecoPorDia() e buscarIngressoDetalhado() realmente deveriam estar em IngressoDAO, e não em PrecoIngressoDAO.
+
+
+
+
+- Telas a serem desenvolvidas:
+
+	- Tela de calendário para mostrar os dias que possuem sessão para aquele filme. utilizar listarDiasComSessoes() de SessaoDAO;
