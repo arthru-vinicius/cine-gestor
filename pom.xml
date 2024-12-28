@@ -20,7 +20,6 @@
             <artifactId>mariadb-java-client</artifactId>
             <version>3.2.0</version>
         </dependency>
-        
         <!-- JUnit para Testes -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -28,19 +27,17 @@
             <version>5.10.0</version>
             <scope>test</scope>
         </dependency>
-        
         <!-- iText para relatórios e ingressos -->
         <dependency>
-		    <groupId>org.apache.pdfbox</groupId>
-		    <artifactId>pdfbox</artifactId>
-		    <version>2.0.29</version>
-		</dependency>
-		
-		<!-- JCalendar para calendários -->
-		<dependency>
-    		<groupId>com.toedter</groupId>
-    		<artifactId>jcalendar</artifactId>
-    		<version>1.4</version>
-		</dependency>
+	    <groupId>org.apache.pdfbox</groupId>
+	    <artifactId>pdfbox</artifactId>
+	    <version>2.0.29</version>
+	</dependency>	
+	<!-- JCalendar para calendários -->
+	<dependency>
+    	    <groupId>com.toedter</groupId>
+    	    <artifactId>jcalendar</artifactId>
+    	    <version>1.4</version>
+	</dependency>
     </dependencies>
 </project>
