@@ -8,7 +8,7 @@
 
 - Verificar se buscarPrecoPorDia() e buscarIngressoDetalhado() realmente deveriam estar em IngressoDAO, e não em PrecoIngressoDAO.
 
-
+- Pensar em como imprimir o relatório.
 
 
 - Telas a serem desenvolvidas:

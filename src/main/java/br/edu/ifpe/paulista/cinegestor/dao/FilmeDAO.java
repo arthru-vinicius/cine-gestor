@@ -2,7 +2,7 @@ package br.edu.ifpe.paulista.cinegestor.dao;
 
 import br.edu.ifpe.paulista.cinegestor.model.Filme;
 import br.edu.ifpe.paulista.cinegestor.util.ConexaoDB;
-import br.edu.ifpe.paulista.cinegestor.util.GerenciadorImagens;
+import br.edu.ifpe.paulista.cinegestor.util.GerenciadorArquivos;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,13 +14,13 @@ public class FilmeDAO {
 
     // Inserir um novo filme
     public void inserirFilme(Filme filme, File arquivoImagem) {
-        String sql = "INSERT INTO filme (titulo, sinopse, duracao, classificacao_etaria) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO filme (titulo, sinopse, duracao, classificacao_etaria, imagem) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection conn = ConexaoDB.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
         	
         	// Salvar a imagem no diretório e obter o caminho relativo
-            String caminhoImagem = GerenciadorImagens.salvarImagem(arquivoImagem);
+            String caminhoImagem = GerenciadorArquivos.salvarFilme(arquivoImagem);
             filme.setImagem(caminhoImagem);
 
             stmt.setString(1, filme.getTitulo());
@@ -76,8 +76,8 @@ public class FilmeDAO {
 
             // Excluir a imagem antiga se uma nova for fornecida
             if (novaImagem != null) {
-                GerenciadorImagens.excluirImagem(filme.getImagem());
-                String novoCaminho = GerenciadorImagens.salvarImagem(novaImagem);
+                GerenciadorArquivos.excluirArquivo(filme.getImagem());
+                String novoCaminho = GerenciadorArquivos.salvarFilme(novaImagem);
                 filme.setImagem(novoCaminho);
             }
 
@@ -99,18 +99,37 @@ public class FilmeDAO {
         }
     }
 
-    // Remover um filme pelo ID
+ // Remover um filme pelo ID e excluir o arquivo de imagem associado
     public void excluirFilme(int idFilme) {
-        String sql = "DELETE FROM filme WHERE id_filme = ?";
+        // Query para recuperar o caminho da imagem do filme
+        String selectSql = "SELECT imagem FROM filme WHERE id_filme = ?";
+        // Query para remover o filme
+        String deleteSql = "DELETE FROM filme WHERE id_filme = ?";
 
         try (Connection conn = ConexaoDB.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+             PreparedStatement selectStmt = conn.prepareStatement(selectSql)) {
 
-            stmt.setInt(1, idFilme);
+            // Recupera o caminho da imagem
+            selectStmt.setInt(1, idFilme);
+            ResultSet rs = selectStmt.executeQuery();
+            String caminhoImagem = null;
+            if (rs.next()) {
+                caminhoImagem = rs.getString("imagem");
+            }
+            rs.close();
 
-            stmt.executeUpdate();
-            System.out.println("Filme removido com sucesso!");
+            // Remove o registro do filme
+            try (PreparedStatement deleteStmt = conn.prepareStatement(deleteSql)) {
+                deleteStmt.setInt(1, idFilme);
+                deleteStmt.executeUpdate();
+                System.out.println("Filme removido com sucesso!");
+            }
 
+            // Remove o arquivo de imagem, se existir
+            if (caminhoImagem != null && !caminhoImagem.isEmpty()) {
+                GerenciadorArquivos.excluirArquivo(caminhoImagem);
+            }
+            
         } catch (SQLException e) {
             e.printStackTrace();
         }

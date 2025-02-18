@@ -10,10 +10,10 @@ public class Ingresso {
     private String nomeFilme; // Derivado da sessão
     private String horarioSessao; // Derivado da sessão
     private String nomeSala; // Derivado da sala
-    private Assento assento; // Derivado da tabela de assentos
+    private String assento; // Derivado da tabela de assentos
     private String tipo; // Inteira ou Meia entrada
     private double precoPago; // Para ficar registrado no ingresso
-    private LocalDateTime dataVenda;;
+    private LocalDateTime dataVenda;
 
     // Getters e Setters
     public int getId() {
@@ -72,11 +72,11 @@ public class Ingresso {
         this.nomeSala = nomeSala;
     }
 
-    public Assento getAssento() {
+    public String getAssento() {
         return assento;
     }
 
-    public void setAssento(Assento assento) {
+    public void setAssento(String assento) {
         this.assento = assento;
     }
 

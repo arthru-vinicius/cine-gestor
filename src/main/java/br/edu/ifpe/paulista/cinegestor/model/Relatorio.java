@@ -1,6 +1,6 @@
 package br.edu.ifpe.paulista.cinegestor.model;
 
-public class RelatorioSimples {
+public class Relatorio {
     private String descricao; // Exemplo: Nome da Sala, Filme ou Vendedor
     private int total;        // Exemplo: Total de Sessões ou Ingressos Vendidos
 

@@ -165,7 +165,7 @@ public class IngressoDAO {
                 assento.setIdentificador(rs.getString("assento_identificador"));
                 assento.setStatus(rs.getString("assento_status"));
 
-                ingresso.setAssento(assento); // Associar o objeto Assento ao Ingresso
+                ingresso.setAssento(assento.getIdentificador()); // Associar o objeto Assento ao Ingresso
             }
 
         } catch (SQLException e) {

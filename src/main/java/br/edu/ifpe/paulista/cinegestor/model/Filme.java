@@ -1,5 +1,8 @@
 package br.edu.ifpe.paulista.cinegestor.model;
 
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+
 public class Filme {
     private int id;
     private String titulo;
@@ -35,6 +38,27 @@ public class Filme {
 
     public String getDuracao() {
         return duracao;
+    }
+    
+    /**
+     * Converte a duração no formato HH:mm:ss para uma representação visual em minutos.
+     * Por exemplo, "01:30:00" será exibido como "90 minutos".
+     *
+     * @return A duração em minutos, seguida de " minutos", ou a string original em caso de erro.
+     */
+    public String getDuracaoVisual() {
+        if (duracao == null || duracao.isEmpty()) {
+            return "";
+        }
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+            LocalTime time = LocalTime.parse(duracao, formatter);
+            int totalMinutos = time.getHour() * 60 + time.getMinute();
+            return totalMinutos + " minutos";
+        } catch (Exception e) {
+            // Em caso de erro na conversão, retorna a string original
+            return duracao;
+        }
     }
 
     public void setDuracao(String duracao) {

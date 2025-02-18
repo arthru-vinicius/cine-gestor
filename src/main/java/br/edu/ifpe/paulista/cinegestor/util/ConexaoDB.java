@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConexaoDB {
-    private static final String URL = "jdbc:mariadb://localhost:3306/cinemabd";
+    private static final String URL = "jdbc:mariadb://localhost:3306/cinemadb";
     private static final String USER = "root";
     private static final String PASSWORD = "";
 
