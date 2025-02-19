@@ -1,0 +1,10 @@
+<clean>
+    <filesets>
+        <fileset>
+            <directory>${project.build.directory}</directory>
+            <excludes>
+                <exclude>node_modules/**</exclude>
+            </excludes>
+        </fileset>
+    </filesets>
+</clean>
