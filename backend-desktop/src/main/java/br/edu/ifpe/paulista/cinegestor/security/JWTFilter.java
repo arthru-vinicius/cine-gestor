@@ -1,14 +1,25 @@
 package br.edu.ifpe.paulista.cinegestor.security;
 
 import io.jsonwebtoken.Claims;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.stereotype.Component;
+import org.springframework.web.filter.OncePerRequestFilter;
 
-public class JWTFilter implements HandlerInterceptor {
+import java.io.IOException;
+import java.util.Collections;
+
+@Component
+public class JWTFilter extends OncePerRequestFilter {
 
     private final JWTUtil jwtUtil;
 
@@ -17,31 +28,40 @@ public class JWTFilter implements HandlerInterceptor {
     }
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+            throws ServletException, IOException {
+
         // Permitir requisições OPTIONS (usadas para CORS)
         if (HttpMethod.OPTIONS.matches(request.getMethod())) {
             response.setStatus(HttpStatus.OK.value());
-            return true;
+            return;
         }
 
         String token = request.getHeader(HttpHeaders.AUTHORIZATION);
 
         if (token == null || !token.startsWith("Bearer ")) {
-            response.setStatus(HttpStatus.UNAUTHORIZED.value());
-            return false;
+            filterChain.doFilter(request, response);
+            return;
         }
 
         token = token.substring(7); // Remover "Bearer "
 
-        if (!jwtUtil.isTokenValid(token)) { // Verifica se o token foi revogado ou expirou
-            response.setStatus(HttpStatus.UNAUTHORIZED.value());
-            return false;
+        if (!jwtUtil.isTokenValid(token)) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            return;
         }
 
         Claims claims = jwtUtil.parseToken(token);
-        request.setAttribute("usuario", claims.getSubject());
-        request.setAttribute("role", claims.get("role"));
+        String username = claims.getSubject();
+        String role = (String) claims.get("role");
 
-        return true;
+        // Criar um usuário autenticado no contexto do Spring Security
+        UsernamePasswordAuthenticationToken authenticationToken =
+                new UsernamePasswordAuthenticationToken(username, null, Collections.emptyList());
+        authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+
+        filterChain.doFilter(request, response);
     }
 }

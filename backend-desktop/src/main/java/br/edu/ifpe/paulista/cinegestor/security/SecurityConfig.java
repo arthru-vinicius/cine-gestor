@@ -13,8 +13,6 @@ import org.springframework.web.filter.CorsFilter;
 
 import java.util.List;
 
-import jakarta.servlet.Filter;
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -28,15 +26,15 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(csrf -> csrf.disable())
-            .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Permitir CORS
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/login").permitAll()
-                .requestMatchers("/api/usuarios/**").hasAuthority("ADMINISTRADOR")
-                .anyRequest().authenticated()
-            )
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .addFilterBefore((Filter) jwtFilter, UsernamePasswordAuthenticationFilter.class);
+                .csrf(csrf -> csrf.disable())
+                .cors(cors -> cors.disable()) // O CORS será tratado pelo CorsFilter separado
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/api/auth/login").permitAll()
+                        .requestMatchers("/api/usuarios/**").hasAuthority("ADMINISTRADOR")
+                        .anyRequest().authenticated()
+                )
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class); // Removida conversão manual para Filter
 
         return http.build();
     }
@@ -48,6 +46,7 @@ public class SecurityConfig {
         config.setAllowedOrigins(List.of("http://localhost:3000", "http://localhost:8080")); // Permite React acessar a API
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("Authorization", "Content-Type"));
+        config.setAllowCredentials(true); // Permite envio de credenciais
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
     }

@@ -117,58 +117,68 @@
 
 	<build>
 		<plugins>
+			<!-- Plugin do Spring Boot -->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<exclude>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+						</exclude>
+					</excludes>
+				</configuration>
 			</plugin>
+
+			<!-- Plugin para manipulação de recursos -->
 			<plugin>
-			    <groupId>org.apache.maven.plugins</groupId>
-			    <artifactId>maven-resources-plugin</artifactId>
-			    <version>3.3.1</version>
-			    <configuration>
-			        <encoding>UTF-8</encoding>
-			        <useDefaultDelimiters>true</useDefaultDelimiters>
-			        <delimiters>
-			            <delimiter>@</delimiter>
-			        </delimiters>
-			    </configuration>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.3.1</version>
+				<configuration>
+					<encoding>UTF-8</encoding>
+					<useDefaultDelimiters>true</useDefaultDelimiters>
+					<delimiters>
+						<delimiter>@</delimiter>
+					</delimiters>
+				</configuration>
+				<executions>
+					<execution>
+						<id>copy-react-build</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.basedir}/src/main/resources/static/</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${project.basedir}/../frontend-web/build</directory>
+									<filtering>false</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
+
+			<!-- Plugin para limpeza do projeto -->
 			<plugin>
-	            <groupId>org.apache.maven.plugins</groupId>
-	            <artifactId>maven-clean-plugin</artifactId>
-	            <version>3.2.0</version>
-	            <configuration>
-	                <filesets>
-	                    <fileset>
-	                        <directory>${project.build.directory}</directory>
-	                        <excludes>
-	                            <exclude>node_modules/**</exclude>
-	                        </excludes>
-	                    </fileset>
-	                </filesets>
-	            </configuration>
-	        </plugin>
-			<plugin>
-            <artifactId>maven-resources-plugin</artifactId>
-            <executions>
-                <execution>
-                    <id>copy-react-build</id>
-                    <phase>prepare-package</phase>
-                    <goals>
-                        <goal>copy-resources</goal>
-                    </goals>
-                    <configuration>
-                        <outputDirectory>${project.basedir}/src/main/resources/static/</outputDirectory>
-                        <resources>
-                            <resource>
-                                <directory>${project.basedir}/../frontend-web/build</directory>
-                                <filtering>false</filtering>
-                            </resource>
-                        </resources>
-                    </configuration>
-                </execution>
-            </executions>
-        </plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>3.2.0</version>
+				<configuration>
+					<filesets>
+						<fileset>
+							<directory>${project.build.directory}</directory>
+							<excludes>
+								<exclude>node_modules/**</exclude>
+							</excludes>
+						</fileset>
+					</filesets>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
