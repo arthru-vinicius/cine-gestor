@@ -16,11 +16,19 @@ public class FilmeController {
     @Autowired
     private FilmeService filmeService;
 
+    // Endpoint para listar todos os filmes
     @GetMapping
     public List<Filme> listarFilmes() {
         return filmeService.listarFilmes();
     }
 
+    // Novo endpoint para listar apenas os filmes com sessões programadas
+    @GetMapping("/com-sessoes")
+    public List<Filme> listarFilmesComSessoes() {
+        return filmeService.listarFilmesComSessoes();
+    }
+
+    // Endpoint para cadastrar um novo filme com imagem
     @PostMapping
     public ResponseEntity<Filme> cadastrarFilme(@RequestParam String titulo,
                                                 @RequestParam String sinopse,
@@ -32,6 +40,25 @@ public class FilmeController {
         filme.setSinopse(sinopse);
         filme.setDuracao(duracao);
         filme.setClassificacaoEtaria(classificacaoEtaria);
-        return ResponseEntity.ok(filmeService.cadastrarFilme(filme, imagem));
+        Filme filmeCadastrado = filmeService.cadastrarFilme(filme, imagem);
+        return ResponseEntity.ok(filmeCadastrado);
+    }
+
+    // Endpoint para atualizar um filme existente
+    @PutMapping("/{id}")
+    public ResponseEntity<Filme> atualizarFilme(@PathVariable Integer id, @RequestBody Filme filmeAtualizado) {
+        Filme filme = filmeService.atualizarFilme(id, filmeAtualizado);
+        if (filme != null) {
+            return ResponseEntity.ok(filme);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    // Endpoint para deletar um filme
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletarFilme(@PathVariable Integer id) {
+        filmeService.deletarFilme(id);
+        return ResponseEntity.noContent().build();
     }
 }

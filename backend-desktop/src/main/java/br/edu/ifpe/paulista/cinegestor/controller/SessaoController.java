@@ -20,6 +20,12 @@ public class SessaoController {
         return sessaoService.listarSessoes();
     }
 
+    // Opcional: endpoint para listar apenas sessões agendadas
+    @GetMapping("/agendadas")
+    public List<Sessao> listarSessoesAgendadas() {
+        return sessaoService.listarSessoesAgendadas();
+    }
+
     @PostMapping
     public ResponseEntity<Sessao> cadastrarSessao(@RequestBody Sessao sessao) {
         return ResponseEntity.ok(sessaoService.cadastrarSessao(sessao));
@@ -27,9 +33,15 @@ public class SessaoController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Sessao> atualizarSessao(@PathVariable Integer id, @RequestBody Sessao sessao) {
-        return ResponseEntity.ok(sessaoService.atualizarSessao(id, sessao));
+        Sessao atualizada = sessaoService.atualizarSessao(id, sessao);
+        if (atualizada != null) {
+            return ResponseEntity.ok(atualizada);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
+    // Em vez de excluir, este endpoint encerra a sessão
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletarSessao(@PathVariable Integer id) {
         sessaoService.deletarSessao(id);
