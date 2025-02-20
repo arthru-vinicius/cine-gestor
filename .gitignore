@@ -4,6 +4,10 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+### Maven ###
+.mvn/
+dependency-reduced-pom.xml
+
 ### STS ###
 .apt_generated
 .classpath
@@ -16,10 +20,12 @@ target/
 bin/
 
 ### IntelliJ IDEA ###
-.idea
+.idea/
 *.iws
 *.iml
 *.ipr
+*.ijm
+out/
 
 ### NetBeans ###
 /nbproject/private/
@@ -34,16 +40,24 @@ build/
 ### VS Code ###
 .vscode/
 
+### Arquivos temporários ###
 *.tmp
 *.bak
 *.swp
+*~
 
-# Arquivos compilados
+### Arquivos compilados ###
 *.class
 
-# Logs
+### Logs ###
 *.log
 
-# Arquivos do sistema operacional
+### Arquivos do sistema operacional ###
 .DS_Store
 Thumbs.db
+desktop.ini
+
+### Gradle (caso necessário) ###
+.gradle/
+gradle-app.setting
+gradle-wrapper.jar
