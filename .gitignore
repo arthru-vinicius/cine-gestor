@@ -1,10 +1,11 @@
+# Arquivos e pastas do Maven
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-### STS ###
+### STS (Spring Tool Suite) ###
 .apt_generated
 .classpath
 .factorypath
@@ -16,7 +17,7 @@ target/
 bin/
 
 ### IntelliJ IDEA ###
-.idea
+.idea/
 *.iws
 *.iml
 *.ipr
@@ -34,6 +35,7 @@ build/
 ### VS Code ###
 .vscode/
 
+# Arquivos temporários
 *.tmp
 *.bak
 *.swp
@@ -47,3 +49,28 @@ build/
 # Arquivos do sistema operacional
 .DS_Store
 Thumbs.db
+desktop.ini
+
+# Dependências do Node.js (React)
+frontend-web/node_modules/
+frontend-web/build/
+
+# Configurações do IntelliJ e VS Code dentro de backend-desktop e frontend-web
+backend-desktop/.idea/
+frontend-web/.idea/
+
+# Arquivos desnecessários do React
+frontend-web/.eslintcache
+frontend-web/.next/
+frontend-web/out/
+frontend-web/.parcel-cache/
+
+# Arquivos do Java/Maven que não precisam ser versionados
+backend-desktop/logs/
+backend-desktop/target/
+backend-desktop/out/
+backend-desktop/.classpath
+backend-desktop/.project
+backend-desktop/.settings/
+backend-desktop/.factorypath
+backend-desktop/.mvn/repository/
