@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.css": "/static/css/main.9fe40f7c.css",
+    "main.js": "/static/js/main.e192bc36.js",
+    "static/media/operacaonatal.jpg": "/static/media/operacaonatal.bbc1f454fb73f03ce835.jpg",
+    "static/media/vingadores.jpg": "/static/media/vingadores.7c78eae95f42447a2ffa.jpg",
+    "static/media/aquaman2.jpg": "/static/media/aquaman2.fbadbc77e275ca28e430.jpg",
+    "static/media/wicked.png": "/static/media/wicked.6ad215d0ec29ef0f76cd.png",
+    "static/media/aindaestouaqui.jpg": "/static/media/aindaestouaqui.2ca566409dedda9c45e2.jpg",
+    "static/media/herege.jpg": "/static/media/herege.ca90ea7fb4d27fe9c9b6.jpg",
+    "index.html": "/index.html",
+    "main.9fe40f7c.css.map": "/static/css/main.9fe40f7c.css.map",
+    "main.e192bc36.js.map": "/static/js/main.e192bc36.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.9fe40f7c.css",
+    "static/js/main.e192bc36.js"
+  ]
+}

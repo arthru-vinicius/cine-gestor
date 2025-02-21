@@ -26,14 +26,14 @@ public class Sala {
     @Column(nullable = false)
     private int linhas;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "lado_entrada", nullable = false)
-    private LadoEntrada ladoEntrada;
+//    @Enumerated(EnumType.STRING)
+//    @Column(name = "lado_entrada", nullable = false)
+//    private LadoEntrada ladoEntrada;
 
     @OneToMany(mappedBy = "sala", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Assento> assentos;
 
     public enum LadoEntrada {
-        ESQUERDA, DIREITA
+        esquerda, direita
     }
 }

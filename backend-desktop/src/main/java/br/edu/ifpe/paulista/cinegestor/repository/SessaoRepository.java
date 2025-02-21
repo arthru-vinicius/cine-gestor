@@ -10,7 +10,5 @@ public interface SessaoRepository extends JpaRepository<Sessao, Integer> {
     List<Sessao> findByFilmeId(Integer filmeId);
     List<Sessao> findBySalaId(Integer salaId);
     List<Sessao> findByHorarioBetween(LocalDateTime inicio, LocalDateTime fim);
-
-    // Mét0do para buscar sessões pelo status
     List<Sessao> findByStatus(StatusSessao status);
 }

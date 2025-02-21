@@ -22,6 +22,6 @@ public class PrecoIngresso {
     private BigDecimal preco;
 
     public enum DiaSemana {
-        DOMINGO, SEGUNDA, TERCA, QUARTA, QUINTA, SEXTA, SABADO
+        domingo, segunda, terca, quarta, quinta, sexta, sabado
     }
 }

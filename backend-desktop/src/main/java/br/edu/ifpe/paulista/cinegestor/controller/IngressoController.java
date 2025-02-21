@@ -1,7 +1,9 @@
 package br.edu.ifpe.paulista.cinegestor.controller;
 
 import br.edu.ifpe.paulista.cinegestor.model.Ingresso;
+import br.edu.ifpe.paulista.cinegestor.model.PrecoIngresso;
 import br.edu.ifpe.paulista.cinegestor.model.Sessao;
+import br.edu.ifpe.paulista.cinegestor.repository.PrecoIngressoRepository;
 import br.edu.ifpe.paulista.cinegestor.service.IngressoService;
 import br.edu.ifpe.paulista.cinegestor.service.PagamentoService;
 import br.edu.ifpe.paulista.cinegestor.service.ControleCaixaService;
@@ -37,6 +39,9 @@ public class IngressoController {
     
     @Autowired
     private GerenciadorArquivos gerenciadorArquivos;
+
+    @Autowired
+    private PrecoIngressoRepository precoIngressoRepository;
 
     /**
      * Lista todos os ingressos vendidos.
@@ -106,5 +111,24 @@ public class IngressoController {
     public ResponseEntity<Double> calcularTroco(@RequestParam double valorPago, @RequestParam double valorIngresso) {
         double troco = pagamentoService.calcularTroco(valorPago, valorIngresso);
         return ResponseEntity.ok(troco);
+    }
+
+    // GET: Lista todos os preços dos ingressos
+    @GetMapping("/precos")
+    public List<PrecoIngresso> listarPrecos() {
+        return precoIngressoRepository.findAll();
+    }
+
+    // PUT: Atualiza o preço de ingresso para um dia específico
+    @PutMapping("/precos")
+    public ResponseEntity<PrecoIngresso> atualizarPrecoIngresso(
+            @RequestParam PrecoIngresso.DiaSemana dia,
+            @RequestParam BigDecimal novoPreco) {
+        try {
+            PrecoIngresso precoAtualizado = ingressoService.atualizarPreco(dia, novoPreco);
+            return ResponseEntity.ok(precoAtualizado);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 }

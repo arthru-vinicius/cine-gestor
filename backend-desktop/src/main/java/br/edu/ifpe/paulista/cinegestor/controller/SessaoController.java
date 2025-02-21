@@ -20,7 +20,6 @@ public class SessaoController {
         return sessaoService.listarSessoes();
     }
 
-    // Opcional: endpoint para listar apenas sessões agendadas
     @GetMapping("/agendadas")
     public List<Sessao> listarSessoesAgendadas() {
         return sessaoService.listarSessoesAgendadas();
@@ -41,7 +40,6 @@ public class SessaoController {
         }
     }
 
-    // Em vez de excluir, este endpoint encerra a sessão
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletarSessao(@PathVariable Integer id) {
         sessaoService.deletarSessao(id);

@@ -3,6 +3,7 @@ package br.edu.ifpe.paulista.cinegestor.controller;
 import br.edu.ifpe.paulista.cinegestor.model.Usuario;
 import br.edu.ifpe.paulista.cinegestor.repository.UsuarioRepository;
 import br.edu.ifpe.paulista.cinegestor.security.JWTUtil;
+import br.edu.ifpe.paulista.cinegestor.security.LoginResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +25,7 @@ public class AuthController {
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @PostMapping("/login")
-    public Map<String, String> login(@RequestBody Usuario loginRequest) {
+    public ResponseEntity<LoginResponse> login(@RequestBody Usuario loginRequest) {
         Usuario usuario = usuarioRepository.findByLogin(loginRequest.getLogin())
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado!"));
 
@@ -33,10 +34,11 @@ public class AuthController {
         }
 
         String token = jwtUtil.generateToken(usuario.getLogin(), usuario.getTipo().name());
-
-        return Map.of("token", token, "tipo", usuario.getTipo().name());
+        LoginResponse response = new LoginResponse(token, usuario.getTipo().name(), usuario.getNomeCompleto(), usuario.getId());
+        return ResponseEntity.ok(response);
     }
-    
+
+
     @PostMapping("/logout")
     public ResponseEntity<String> logout(@RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
         if (token == null || !token.startsWith("Bearer ")) {

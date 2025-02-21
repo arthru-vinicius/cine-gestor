@@ -1,8 +1,8 @@
 // src/Pages/Dashboard.jsx
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import api from '../../services/api'; // Importa a instância customizada
 
 const Dashboard = () => {
   const [filmes, setFilmes] = useState([]);
@@ -10,7 +10,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchFilmes = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/api/filmes/com-sessoes');
+        const response = await api.get('/api/filmes/com-sessoes');
         setFilmes(response.data);
       } catch (error) {
         console.error('Erro ao buscar filmes:', error);

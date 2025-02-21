@@ -38,11 +38,11 @@ public class FilmeService {
 
         for (Sessao sessao : sessoes) {
             // Verifica se a sessão está agendada e se há um filme associado
-            if (sessao.getStatus() == Sessao.StatusSessao.AGENDADA && sessao.getFilme() != null) {
+            if (sessao.getStatus() == Sessao.StatusSessao.agendada && sessao.getFilme() != null) {
                 Filme f = sessao.getFilme();
                 if (f.getImagemCaminho() != null && !f.getImagemCaminho().isEmpty()) {
                     String nomeArquivo = f.getImagemCaminho().replace("img/", "");
-                    String fullUrl = "http://localhost:8080/imagens/" + nomeArquivo;
+                    String fullUrl = "http://localhost:8080/img/" + nomeArquivo;
                     f.setImagemCaminho(fullUrl);
                 }
                 filmesComSessoes.add(f);
@@ -52,10 +52,23 @@ public class FilmeService {
     }
 
     public Filme cadastrarFilme(Filme filme, MultipartFile imagem) throws IOException {
+        if (filme.getTitulo() == null || filme.getTitulo().trim().isEmpty()) {
+            throw new IllegalArgumentException("O título do filme é obrigatório.");
+        }
+        if (filme.getDuracao() == null || filme.getDuracao().trim().isEmpty()) {
+            throw new IllegalArgumentException("A duração do filme é obrigatória.");
+        }
+        if (filme.getClassificacaoEtaria() == null || filme.getClassificacaoEtaria().trim().isEmpty()) {
+            throw new IllegalArgumentException("A classificação etária do filme é obrigatória.");
+        }
+
+        // Salva a imagem se houver uma enviada
         if (imagem != null && !imagem.isEmpty()) {
             String caminhoImagem = gerenciadorArquivos.salvarFilme(imagem);
             filme.setImagemCaminho(caminhoImagem);
         }
+
+        // Salva o filme no banco de dados
         return filmeRepository.save(filme);
     }
 

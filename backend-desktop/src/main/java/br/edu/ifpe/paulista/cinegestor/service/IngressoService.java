@@ -52,11 +52,11 @@ public class IngressoService {
             Ingresso ingresso = ingressoOpt.get();
             Sessao sessao = ingresso.getSessao();
 
-            // 🔄 Liberar o assento ocupado
+            // Liberar o assento ocupado
             sessao.liberarAssento(ingresso.getAssento());
             sessaoRepository.save(sessao);
 
-            // ❌ Excluir o ingresso do banco de dados
+            // Excluir o ingresso do banco de dados
             ingressoRepository.deleteById(id);
 
             // 🗑 Excluir o PDF do ingresso armazenado
@@ -137,5 +137,12 @@ public class IngressoService {
         DayOfWeek diaSemana = horario.getDayOfWeek();
         return precoIngressoRepository.findByDiaSemana(PrecoIngresso.DiaSemana.valueOf(diaSemana.name()))
                 .orElseThrow(() -> new RuntimeException("Preço não encontrado para o dia da semana: " + diaSemana));
+    }
+
+    public PrecoIngresso atualizarPreco(PrecoIngresso.DiaSemana dia, BigDecimal novoPreco) {
+        PrecoIngresso precoIngresso = precoIngressoRepository.findByDiaSemana(dia)
+                .orElseThrow(() -> new RuntimeException("Preço não encontrado para o dia: " + dia));
+        precoIngresso.setPreco(novoPreco);
+        return precoIngressoRepository.save(precoIngresso);
     }
 }

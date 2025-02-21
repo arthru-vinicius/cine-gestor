@@ -25,7 +25,7 @@ public class Usuario {
     @Column(unique = true, nullable = false, length = 50)
     private String login;
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false, length = 100)
     private String senha;
 
     @Enumerated(EnumType.STRING)
@@ -33,6 +33,6 @@ public class Usuario {
     private TipoUsuario tipo;
 
     public enum TipoUsuario {
-        ADMINISTRADOR, FUNCIONARIO
+        administrador, funcionario
     }
 }
